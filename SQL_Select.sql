@@ -69,3 +69,41 @@ WHERE type = 'PC' AND
 maker NOT IN (SELECT Distinct maker FROM Product as Pr
 WHERE type = 'Laptop')
 
+--Задание №9: Найдите производителей ПК с процессором не менее 450 Мгц. Вывести: Maker
+
+SELECT DISTINCT maker FROM Product JOIN PC
+ON Product.model = PC.model
+WHERE PC.speed >= 450
+
+--Задание №10: Найдите модели принтеров, имеющих самую высокую цену. Вывести: model, price
+
+SELECT Product.model, Printer.price FROM Product JOIN Printer 
+ON Product.model = Printer.model
+WHERE Printer.price = (SELECT MAX(price) FROM Printer)
+
+--Задание №11: Найдите среднюю скорость ПК.
+
+SELECT AVG(speed) FROM PC
+
+--Задание №12: Найдите среднюю скорость ПК-блокнотов, цена которых превышает 1000 дол.
+
+SELECT AVG(speed) FROM Laptop
+WHERE price > 1000
+
+--Задание №13: Найдите среднюю скорость ПК, выпущенных производителем A.
+
+SELECT AVG(PC.speed) FROM PC JOIN Product
+ON PC.model = Product.model
+WHERE maker = 'A'
+
+--Задание №14: Найдите размеры жестких дисков, совпадающих у двух и более PC. Вывести: HD
+
+SELECT hd FROM PC 
+GROUP BY hd
+HAVING COUNT(hd) >= 2
+
+
+
+
+
+
